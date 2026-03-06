@@ -2,7 +2,6 @@ import { Outlet } from "react-router";
 import styles from "../AppLayout/style/index.module.css";
 
 import { ProManageIcon } from "../../ui/icons/ProManageIcon/index.jsx";
-import { hueta } from "../../assets/image/hueta";
 import { Navbar } from "../../components/Navbar/index.jsx";
 import { LogoutText } from "../../ui/logoutText/index.jsx";
 
