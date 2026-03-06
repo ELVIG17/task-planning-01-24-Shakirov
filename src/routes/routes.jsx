@@ -6,9 +6,9 @@ import { DashboardPage } from "../pages/DashboardPage";
 import { SettingsPage } from "../pages/SettingsPage";
 
 export const ROUTES = createBrowserRouter([
-  { path: "/", element: <HomePage/> },
-  { path: "/analytics", element: <AnalyticsPage/> },
-   { path: "/board", element: <BoardPage/> },
-    { path: "/dashboard", element: <DashboardPage/> },
-     { path: "/settings", element: <SettingsPage/> },
+  { path: "/", element: <HomePage /> },
+  { path: "/analytics", element: <AnalyticsPage /> },
+  { path: "/board", element: <BoardPage /> },
+  { path: "/dashboard", element: <DashboardPage /> },
+  { path: "/settings", element: <SettingsPage /> },
 ]);

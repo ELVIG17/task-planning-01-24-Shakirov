@@ -5,6 +5,6 @@
 
 @media (width <= 440px) {
   .logoIcon {
-    width: 30px;
+      width: 30px;
   }
 }

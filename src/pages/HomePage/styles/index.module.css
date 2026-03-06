@@ -1,13 +1,11 @@
-.wrapper{
-
-    
-    display: grid;
-     grid-template-columns: repeat(3, 1fr);
+.wrapper {
+  display: grid;
+  grid-template-columns: 224px 1fr 1fr;
   grid-template-rows: repeat(3, 1fr);
   grid-template-areas:
     "navbar header header"
     "navbar main main"
-    "navbar main main";  
+    "navbar main main";
 }
 
 .header {
@@ -22,5 +20,7 @@
 
 .navbar {
   grid-area: navbar;
-  background-color: blue; 
+  background-color: blue;
 }
+
+

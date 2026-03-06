@@ -1,0 +1,10 @@
+/* ItemNavbar styles */
+.item {
+  display: flex;
+  flex-direction: row; /* по умолчанию и так row */
+  align-items: center;
+  gap: 10px;
+}
+.text {
+  margin: 0;
+}
