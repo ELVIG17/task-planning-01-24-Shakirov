@@ -1,0 +1,56 @@
+.wrapper {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: 224px 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-areas:
+    "navbar header header"
+    "navbar main main"
+    "navbar main main";
+}
+
+.header {
+  grid-area: header;
+  background-color: red;
+}
+
+.main {
+  grid-area: main;
+  background-color: green;
+}
+
+.navbar {
+  grid-area: navbar;
+  background-color: #ffffff;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
+
+  /* главное */
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 32px 16px; /* вместо margin-left у детей */
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 43px;
+}
+
+.headerOfNav {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.menuWrap {
+  /* сюда встанет Navbar (меню) */
+  align-self: center; /* если хочешь, чтобы меню было ближе к центру */
+}
+
+.logoutBut {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 43px;
+}
