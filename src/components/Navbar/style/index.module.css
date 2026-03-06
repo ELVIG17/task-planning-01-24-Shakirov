@@ -9,12 +9,14 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  margin-top: 70px;
 }
 
 .menuItem {
   background-color: blueviolet;
   display: flex;
   flex-direction: row;
+  margin-left: 43px;
 }
 .link {
   display: flex;

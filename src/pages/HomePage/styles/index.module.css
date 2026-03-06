@@ -21,6 +21,23 @@
 .navbar {
   grid-area: navbar;
   background-color: blue;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
 }
 
+.brand {
+  margin-left: 43px;
+  margin-top: 32px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
 
+.headerOfNav {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.logoutBut {
+  display: flex;
+  margin-left: 43px;
+}

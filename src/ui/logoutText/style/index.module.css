@@ -1,0 +1,21 @@
+.text {
+  padding: 0;
+  border: 0;
+  background: transparent;
+
+  color: inherit;
+  font: inherit;
+
+  cursor: pointer;
+  text-align: left;
+}
+
+.text:hover {
+  text-decoration: underline;
+}
+
+.text:focus-visible {
+  outline: 2px solid rgba(32, 150, 255, 0.7);
+  outline-offset: 4px;
+  border-radius: 6px;
+}

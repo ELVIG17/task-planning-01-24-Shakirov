@@ -1,7 +1,7 @@
 import styles from "./styles/index.module.css";
 import { ProManageIcon } from "../../ui/icons/ProManageIcon";
 import { Navbar } from "../../components/Navbar/index.jsx";
-import { LogoutButton } from "../../ui/logoutButton/index.jsx";
+import { LogoutText } from "../../ui/logoutText/index.jsx";
 
 export const HomePage = () => {
   const items = [
@@ -19,10 +19,16 @@ export const HomePage = () => {
         <section>section</section>
       </div>
       <div className={styles.navbar}>
-        <Navbar
-          items={items}
-          logout={<LogoutButton onClick={() => console.log("logout")} />}
-        />
+        <div className={styles.brand}>
+          <ProManageIcon />
+          <p className={styles.headerOfNav}>Pro Manage</p>
+        </div>
+        <Navbar items={items} />
+
+        <div className={styles.logoutBut}>
+          <ProManageIcon />
+          <LogoutText />
+        </div>
       </div>
     </div>
   );
