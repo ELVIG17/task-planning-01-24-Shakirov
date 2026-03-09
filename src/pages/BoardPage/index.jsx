@@ -2,21 +2,38 @@
 import { useState } from "react";
 import styles from "./style/index.module.css";
 
-import { IconButton } from "../../ui/iconButtom/index.jsx"; // проверь: папка iconButton или iconButtom
+import { IconButton } from "../../ui/iconButtom/index.jsx"; // проверь название папки: iconButton vs iconButtom
 import { DateRangeFilter } from "../../ui/dataRangeFilter/index.jsx";
+import { Modals } from "../../ui/modals/index.jsx";
 
 export const BoardPage = () => {
-  const [range, setRange] = useState("day"); // day | week | month
+  const [range, setRange] = useState("day"); // фильтр day/week/month (у тебя уже был)
+  const [isCreateOpen, setIsCreateOpen] = useState(false); // открыта ли "модалка создания" (пока заглушка)
+  const [createColumn, setCreateColumn] = useState(null); // в какой колонке нажали "+": todo/in-progress/done
+
+  const openCreateTask = (column) => {
+    setCreateColumn(column);
+    setIsCreateOpen(true);
+  };
+
+  const closeCreateTask = () => {
+    setIsCreateOpen(false);
+    setCreateColumn(null);
+  };
 
   return (
     <div className={styles.page}>
-      {/* Верхняя строка над колонками */}
       <div className={styles.boardHeader}>
         <h2 className={styles.boardTitle}>Board</h2>
         <DateRangeFilter value={range} onChange={setRange} />
       </div>
 
-      {/* 3 колонки */}
+      <Modals isOpen={isCreateOpen} onClose={closeCreateTask}>
+        <div>
+          Create Task. Column: <b>{createColumn}</b>
+        </div>
+      </Modals>
+
       <div className={styles.columns}>
         {/* TO DO */}
         <section className={styles.column}>
@@ -26,7 +43,7 @@ export const BoardPage = () => {
             <div className={styles.columnActions}>
               <IconButton
                 ariaLabel="Add task to To Do"
-                onClick={() => console.log("add task: todo")}
+                onClick={() => openCreateTask("todo")}
               >
                 +
               </IconButton>
@@ -54,7 +71,7 @@ export const BoardPage = () => {
             <div className={styles.columnActions}>
               <IconButton
                 ariaLabel="Add task to In Progress"
-                onClick={() => console.log("add task: in-progress")}
+                onClick={() => openCreateTask("in-progress")}
               >
                 +
               </IconButton>
@@ -81,7 +98,7 @@ export const BoardPage = () => {
             <div className={styles.columnActions}>
               <IconButton
                 ariaLabel="Add task to Done"
-                onClick={() => console.log("add task: done")}
+                onClick={() => openCreateTask("done")}
               >
                 +
               </IconButton>
