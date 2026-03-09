@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 16px 24px;
+}
+
+/* левый блок занимает всё доступное место */
+.searchWrap {
+  flex: 1;
+  min-width: 0; /* важно, чтобы инпут не ломал flex */ /* если хочешь ограничить ширину поиска */
+}
+
+/* правый блок — три квадрата справа */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* временные квадраты под будущие иконки/аватар */
+.square {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}

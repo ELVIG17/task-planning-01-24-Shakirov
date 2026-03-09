@@ -1,9 +1,11 @@
 import { Outlet } from "react-router";
+import { useState } from "react";
 import styles from "../AppLayout/style/index.module.css";
 
 import { ProManageIcon } from "../../ui/icons/ProManageIcon/index.jsx";
 import { Navbar } from "../../components/Navbar/index.jsx";
 import { LogoutText } from "../../ui/logoutText/index.jsx";
+import { AppHeader } from "../../components/AppHeader/index.jsx";
 
 export const AppLayout = () => {
   const items = [
@@ -14,9 +16,13 @@ export const AppLayout = () => {
     { to: "/settings", text: "Settings", Icon: ProManageIcon },
   ];
 
+  const [query, setQuery] = useState("");
+
   return (
     <div className={styles.wrapper}>
-      <div className={styles.header}>header</div>
+      <div className={styles.header}>
+        <AppHeader query={query} setQuery={setQuery} />
+      </div>
 
       <div className={styles.main}>
         <Outlet />

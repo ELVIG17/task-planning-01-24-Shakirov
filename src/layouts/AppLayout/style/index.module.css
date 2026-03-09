@@ -12,6 +12,7 @@
 .header {
   grid-area: header;
   background-color: red;
+  max-height: 80px;
 }
 
 .main {
