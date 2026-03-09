@@ -1,0 +1,88 @@
+.title {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.meta {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: rgba(17, 24, 39, 0.6);
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(17, 24, 39, 0.8);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 10px 12px;
+
+  border: 1px solid rgba(17, 24, 39, 0.15);
+  border-radius: 10px;
+
+  background: #f9fafb;
+  color: #111827;
+
+  outline: none;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: rgba(32, 150, 255, 0.8);
+  box-shadow: 0 0 0 4px rgba(32, 150, 255, 0.15);
+  background: #fff;
+}
+
+.actions {
+  margin-top: 4px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-weight: 600;
+}
+
+.btnPrimary {
+  background: #2096ff;
+  color: #fff;
+}
+
+.btnPrimary:hover {
+  background: #1687ea;
+}
+
+.btnGhost {
+  background: transparent;
+  border-color: rgba(17, 24, 39, 0.15);
+  color: #111827;
+}
+
+.btnGhost:hover {
+  background: rgba(17, 24, 39, 0.04);
+}

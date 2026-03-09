@@ -2,14 +2,41 @@
 import { useState } from "react";
 import styles from "./style/index.module.css";
 
-import { IconButton } from "../../ui/iconButtom/index.jsx"; // проверь название папки: iconButton vs iconButtom
+import { IconButton } from "../../ui/iconButton/index.jsx"; // проверь название папки: iconButton vs iconButtom
 import { DateRangeFilter } from "../../ui/dataRangeFilter/index.jsx";
-import { Modals } from "../../ui/modals/index.jsx";
+import { CreateTaskModal } from "../../components/createTaskModal/index.jsx";
+// import { handleCreateTask } from "../../components/createTaskModal/index.jsx";
 
 export const BoardPage = () => {
   const [range, setRange] = useState("day"); // фильтр day/week/month (у тебя уже был)
   const [isCreateOpen, setIsCreateOpen] = useState(false); // открыта ли "модалка создания" (пока заглушка)
   const [createColumn, setCreateColumn] = useState(null); // в какой колонке нажали "+": todo/in-progress/done
+
+  const [tasks, setTasks] = useState([
+    { id: 1, status: "todo", title: "Task 1", topic: "", description: "" },
+    { id: 2, status: "todo", title: "Task 2", topic: "", description: "" },
+    {
+      id: 3,
+      status: "in-progress",
+      title: "Task 3",
+      topic: "",
+      description: "",
+    },
+    { id: 4, status: "done", title: "Task 4", topic: "", description: "" },
+  ]);
+
+  const handleCreateTask = ({ topic, title, description }) => {
+    setTasks((prev) => [
+      ...prev,
+      {
+        id: Date.now(), // временно, потом можно uuid
+        status: createColumn, // важно: кладём в выбранную колонку
+        topic,
+        title,
+        description,
+      },
+    ]);
+  };
 
   const openCreateTask = (column) => {
     setCreateColumn(column);
@@ -28,11 +55,12 @@ export const BoardPage = () => {
         <DateRangeFilter value={range} onChange={setRange} />
       </div>
 
-      <Modals isOpen={isCreateOpen} onClose={closeCreateTask}>
-        <div>
-          Create Task. Column: <b>{createColumn}</b>
-        </div>
-      </Modals>
+      <CreateTaskModal
+        isOpen={isCreateOpen}
+        onClose={closeCreateTask}
+        column={createColumn}
+        onCreate={handleCreateTask}
+      />
 
       <div className={styles.columns}>
         {/* TO DO */}
@@ -58,8 +86,13 @@ export const BoardPage = () => {
           </div>
 
           <ul className={styles.list}>
-            <li className={styles.card}>Task 1</li>
-            <li className={styles.card}>Task 2</li>
+            {tasks
+              .filter((t) => t.status === "todo")
+              .map((t) => (
+                <li key={t.id} className={styles.card}>
+                  {t.title}
+                </li>
+              ))}
           </ul>
         </section>
 
@@ -86,7 +119,13 @@ export const BoardPage = () => {
           </div>
 
           <ul className={styles.list}>
-            <li className={styles.card}>Task 3</li>
+            {tasks
+              .filter((t) => t.status === "in-progress")
+              .map((t) => (
+                <li key={t.id} className={styles.card}>
+                  {t.title}
+                </li>
+              ))}
           </ul>
         </section>
 
@@ -113,7 +152,13 @@ export const BoardPage = () => {
           </div>
 
           <ul className={styles.list}>
-            <li className={styles.card}>Task 4</li>
+            {tasks
+              .filter((t) => t.status === "done")
+              .map((t) => (
+                <li key={t.id} className={styles.card}>
+                  {t.title}
+                </li>
+              ))}
           </ul>
         </section>
       </div>
