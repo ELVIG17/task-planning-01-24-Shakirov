@@ -2,11 +2,15 @@
   display: grid;
   gap: 32px;
   grid-template-columns: 224px 1fr 1fr;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: 80px 1fr;
   grid-template-areas:
     "navbar header header"
-    "navbar main main"
     "navbar main main";
+
+  column-gap: 32px; /* расстояние между sidebar и контентом */
+  row-gap: 16px; /* расстояние между header и main (поставь 0 если надо вплотную) */
+
+  min-height: 100vh;
 }
 
 .header {
