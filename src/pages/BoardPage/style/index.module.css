@@ -1,6 +1,24 @@
+/* src/pages/BoardPage/style/index.module.css */
 .page {
   height: 100%;
   padding: 24px;
+
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 16px;
+}
+
+.boardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.boardTitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .columns {

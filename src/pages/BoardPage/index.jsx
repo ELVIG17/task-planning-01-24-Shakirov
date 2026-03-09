@@ -1,9 +1,22 @@
+// src/pages/BoardPage/index.jsx
+import { useState } from "react";
 import styles from "./style/index.module.css";
-import { IconButton } from "../../ui/iconButtom/index.jsx";
+
+import { IconButton } from "../../ui/iconButtom/index.jsx"; // проверь: папка iconButton или iconButtom
+import { DateRangeFilter } from "../../ui/dataRangeFilter/index.jsx";
 
 export const BoardPage = () => {
+  const [range, setRange] = useState("day"); // day | week | month
+
   return (
     <div className={styles.page}>
+      {/* Верхняя строка над колонками */}
+      <div className={styles.boardHeader}>
+        <h2 className={styles.boardTitle}>Board</h2>
+        <DateRangeFilter value={range} onChange={setRange} />
+      </div>
+
+      {/* 3 колонки */}
       <div className={styles.columns}>
         {/* TO DO */}
         <section className={styles.column}>

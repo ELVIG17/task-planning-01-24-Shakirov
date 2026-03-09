@@ -15,19 +15,21 @@
 
 .header {
   grid-area: header;
-  background-color: red;
+  /* background-color: red; */
   max-height: 80px;
+  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
 }
 
 .main {
   grid-area: main;
-  background-color: green;
+  /* background-color: green; */
+  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
 }
 
 .navbar {
   grid-area: navbar;
   background-color: #ffffff;
-  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
 
   /* главное */
   display: grid;
