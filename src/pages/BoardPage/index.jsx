@@ -1,6 +1,7 @@
 // src/pages/BoardPage/index.jsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./style/index.module.css";
+import { tasksApi } from "../../api/tasksApi.js";
 
 import { IconButton } from "../../ui/iconButton/index.jsx"; // проверь название папки: iconButton vs iconButtom
 import { DateRangeFilter } from "../../ui/dataRangeFilter/index.jsx";
@@ -12,30 +13,66 @@ export const BoardPage = () => {
   const [isCreateOpen, setIsCreateOpen] = useState(false); // открыта ли "модалка создания" (пока заглушка)
   const [createColumn, setCreateColumn] = useState(null); // в какой колонке нажали "+": todo/in-progress/done
 
-  const [tasks, setTasks] = useState([
-    { id: 1, status: "todo", title: "Task 1", topic: "", description: "" },
-    { id: 2, status: "todo", title: "Task 2", topic: "", description: "" },
-    {
-      id: 3,
-      status: "in-progress",
-      title: "Task 3",
-      topic: "",
-      description: "",
-    },
-    { id: 4, status: "done", title: "Task 4", topic: "", description: "" },
-  ]);
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const handleCreateTask = ({ topic, title, description }) => {
-    setTasks((prev) => [
-      ...prev,
-      {
-        id: Date.now(), // временно, потом можно uuid
-        status: createColumn, // важно: кладём в выбранную колонку
-        topic,
-        title,
-        description,
-      },
-    ]);
+  useEffect(() => {
+
+    let cancelled = false;
+
+    async function loadTasks() {
+
+      try{setLoading(true);
+        setError(null)
+
+        const data = await tasksApi.list()
+
+        if(!cancelled) setTasks(data)
+
+
+      }
+
+      catch(e) {
+        if(!cancelled) setError(e.message)
+      }
+
+      finally {
+        if(!cancelled) setLoading(false)
+              }
+    }
+    
+    loadTasks()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  {loading && <div>Loading tasks...</div>}
+{error && <div style={{ color: "red" }}>{error}</div>}
+
+  const handleCreateTask = async ({ topic, title, description }) => {
+    if(!createColumn) return
+
+    try{
+      const created = await tasksApi.create({
+        topic, 
+        title, 
+        description,  
+        status: createColumn,
+      })
+
+      setTasks((prev) => [created, ...prev])
+    
+    }
+    catch(e) {
+      console.error("Created task failed: ", e  )
+      alert(e.message)
+    }
+
+
+
   };
 
   const openCreateTask = (column) => {
