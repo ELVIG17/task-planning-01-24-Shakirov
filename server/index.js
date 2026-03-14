@@ -1,10 +1,15 @@
 /* eslint-disable no-undef */
 
 const express = require('express');
-const cors = require('cors')
-const {PrismaClient} = require("@prisma/client");
+const cors = require('cors');
+const { PrismaClient } = require('@prisma/client');
+const { PrismaBetterSqlite3 } = require('@prisma/adapter-better-sqlite3');
 
-    const prisma = new PrismaClient();
+const adapter = new PrismaBetterSqlite3({ url: 'file:./dev.db' });
+const prisma = new PrismaClient({ adapter });
+
+
+
     const app = express()
 
     app.use(cors());
@@ -61,4 +66,4 @@ const {PrismaClient} = require("@prisma/client");
 
 
     const  PORT = process.env.PORT || 3000
-    app.listen(PORT, () => console.log(`api running on http://localhost: ${PORT}`))
+    app.listen(PORT, () => console.log(`api running on http://localhost:${PORT}`))
