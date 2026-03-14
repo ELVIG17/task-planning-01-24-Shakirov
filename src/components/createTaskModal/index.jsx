@@ -7,34 +7,27 @@ export const CreateTaskModal = ({ isOpen, onClose, column, onCreate }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    onCreate({ topic, title, description });
-
-    console.log({
-      column,
-      topic,
-      title,
-      description,
-    });
-
-    hundleClose();
-  };
-
   const resetForm = () => {
     setTopic("");
     setTitle("");
     setDescription("");
   };
 
-  const hundleClose = () => {
+  const handleClose = () => {
     resetForm();
     onClose();
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // ждём создание, и только если оно прошло успешно — закрываем
+    await onCreate({ topic, title, description });
+    handleClose();
+  };
+
   return (
-    <Modals isOpen={isOpen} onClose={hundleClose}>
+    <Modals isOpen={isOpen} onClose={handleClose}>
       <h3 className={styles.title}>Create Task</h3>
       <p className={styles.meta}>Column: {column}</p>
 
@@ -45,11 +38,9 @@ export const CreateTaskModal = ({ isOpen, onClose, column, onCreate }) => {
             <input
               className={styles.input}
               value={topic}
-              onChange={(e) => {
-                setTopic(e.target.value);
-              }}
-              placeholder="e.g.Work"
-            ></input>
+              onChange={(e) => setTopic(e.target.value)}
+              placeholder="e.g. Work"
+            />
           </label>
         </div>
 
@@ -59,30 +50,26 @@ export const CreateTaskModal = ({ isOpen, onClose, column, onCreate }) => {
             <input
               className={styles.input}
               value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="create title"
-            ></input>
+            />
           </label>
         </div>
 
         <div className={styles.field}>
           <label className={styles.label}>
             Description
-            <input
+            <textarea
               className={styles.input}
               value={description}
-              onChange={(e) => {
-                setDescription(e.target.value);
-              }}
+              onChange={(e) => setDescription(e.target.value)}
               placeholder="task description"
               rows={4}
-            ></input>
+            />
           </label>
         </div>
 
-        <button lassName={`${styles.btn} ${styles.btnPrimary}`} type="submit">
+        <button className={`${styles.btn} ${styles.btnPrimary}`} type="submit">
           Create
         </button>
       </form>

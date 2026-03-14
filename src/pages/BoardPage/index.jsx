@@ -3,77 +3,49 @@ import { useEffect, useState } from "react";
 import styles from "./style/index.module.css";
 import { tasksApi } from "../../api/tasksApi.js";
 
-import { IconButton } from "../../ui/iconButton/index.jsx"; // проверь название папки: iconButton vs iconButtom
+import { IconButton } from "../../ui/iconButton/index.jsx";
 import { DateRangeFilter } from "../../ui/dataRangeFilter/index.jsx";
+
 import { CreateTaskModal } from "../../components/createTaskModal/index.jsx";
-// import { handleCreateTask } from "../../components/createTaskModal/index.jsx";
+import { EditTaskModal } from "../../components/editTaskModal/index.jsx";
 
 export const BoardPage = () => {
-  const [range, setRange] = useState("day"); // фильтр day/week/month (у тебя уже был)
-  const [isCreateOpen, setIsCreateOpen] = useState(false); // открыта ли "модалка создания" (пока заглушка)
-  const [createColumn, setCreateColumn] = useState(null); // в какой колонке нажали "+": todo/in-progress/done
+  const [range, setRange] = useState("day");
+
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [createColumn, setCreateColumn] = useState(null);
 
   const [tasks, setTasks] = useState([]);
+
+  const [openMenuId, setOpenMenuId] = useState(null);
+  const [editTask, setEditTask] = useState(null);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-
     let cancelled = false;
 
     async function loadTasks() {
+      try {
+        setLoading(true);
+        setError(null);
 
-      try{setLoading(true);
-        setError(null)
-
-        const data = await tasksApi.list()
-
-        if(!cancelled) setTasks(data)
-
-
+        const data = await tasksApi.list();
+        if (!cancelled) setTasks(Array.isArray(data) ? data : []);
+      } catch (e) {
+        if (!cancelled) setError(e?.message || "Failed to load tasks");
+      } finally {
+        if (!cancelled) setLoading(false);
       }
-
-      catch(e) {
-        if(!cancelled) setError(e.message)
-      }
-
-      finally {
-        if(!cancelled) setLoading(false)
-              }
     }
-    
-    loadTasks()
+
+    loadTasks();
 
     return () => {
-      cancelled = true
-    }
-  }, [])
-
-  {loading && <div>Loading tasks...</div>}
-{error && <div style={{ color: "red" }}>{error}</div>}
-
-  const handleCreateTask = async ({ topic, title, description }) => {
-    if(!createColumn) return
-
-    try{
-      const created = await tasksApi.create({
-        topic, 
-        title, 
-        description,  
-        status: createColumn,
-      })
-
-      setTasks((prev) => [created, ...prev])
-    
-    }
-    catch(e) {
-      console.error("Created task failed: ", e  )
-      alert(e.message)
-    }
-
-
-
-  };
+      cancelled = true;
+    };
+  }, []);
 
   const openCreateTask = (column) => {
     setCreateColumn(column);
@@ -85,18 +57,129 @@ export const BoardPage = () => {
     setCreateColumn(null);
   };
 
+  const handleCreateTask = async ({ topic, title, description }) => {
+    if (!createColumn) return;
+
+    try {
+      const created = await tasksApi.create({
+        topic,
+        title,
+        description,
+        status: createColumn,
+      });
+
+      setTasks((prev) => [created, ...prev]);
+      closeCreateTask();
+    } catch (e) {
+      console.error("Create task failed:", e);
+      alert(e?.message || "Не удалось создать задачу");
+    }
+  };
+
+  const handleDeleteTask = async (id) => {
+    try {
+      await tasksApi.remove(id);
+      setTasks((prev) => prev.filter((t) => t.id !== id));
+
+      setOpenMenuId((prev) => (prev === id ? null : prev));
+      setEditTask((prev) => (prev?.id === id ? null : prev));
+    } catch (e) {
+      console.error("Delete task failed:", e);
+      alert(e?.message || "Не удалось удалить задачу");
+    }
+  };
+
+  const handleUpdateTask = async (id, patch) => {
+    try {
+      const updated = await tasksApi.update(id, patch);
+
+      setTasks((prev) =>
+        prev.map((t) => (t.id === id ? (updated ?? { ...t, ...patch }) : t))
+      );
+    } catch (e) {
+      console.error("Update task failed:", e);
+      alert(e?.message || "Не удалось обновить задачу");
+    }
+  };
+
+  const renderTaskCard = (t) => {
+    return (
+      <li
+        key={t.id}
+        className={styles.card}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className={styles.cardTop}>
+          <div className={styles.cardTopic}>{t.topic}</div>
+
+          <div className={styles.cardActions}>
+            <IconButton
+              ariaLabel="Task actions"
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenMenuId((prev) => (prev === t.id ? null : t.id));
+              }}
+            >
+              ⋯
+            </IconButton>
+
+            {openMenuId === t.id && (
+              <div
+                className={styles.cardMenu}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  className={styles.cardMenuItem}
+                  onClick={() => {
+                    setEditTask(t);
+                    setOpenMenuId(null);
+                  }}
+                >
+                  Edit
+                </button>
+
+                <button
+                  className={styles.cardMenuItemDanger}
+                  onClick={() => {
+                    setOpenMenuId(null);
+                    handleDeleteTask(t.id);
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className={styles.cardTitle}>{t.title}</div>
+        <div className={styles.cardDesc}>{t.description}</div>
+      </li>
+    );
+  };
+
   return (
-    <div className={styles.page}>
+    <div className={styles.page} onClick={() => setOpenMenuId(null)}>
       <div className={styles.boardHeader}>
         <h2 className={styles.boardTitle}>Board</h2>
         <DateRangeFilter value={range} onChange={setRange} />
       </div>
+
+      {loading && <div>Loading tasks...</div>}
+      {error && <div style={{ color: "red" }}>{error}</div>}
 
       <CreateTaskModal
         isOpen={isCreateOpen}
         onClose={closeCreateTask}
         column={createColumn}
         onCreate={handleCreateTask}
+      />
+
+      <EditTaskModal
+        isOpen={!!editTask}
+        task={editTask}
+        onClose={() => setEditTask(null)}
+        onSave={handleUpdateTask}
       />
 
       <div className={styles.columns}>
@@ -123,16 +206,8 @@ export const BoardPage = () => {
           </div>
 
           <ul className={styles.list}>
-            {tasks
-              .filter((t) => t.status === "todo")
-                .map((t) => (
-                   <li key={t.id} className={styles.card}>
-                    <div className={styles.cardTopic}>{t.topic}</div>
-                    <div className={styles.cardTitle}>{t.title}</div>
-                    <div className={styles.cardDesc}>{t.description}</div>
-                  </li>
-                  ))}
-           </ul>
+            {tasks.filter((t) => t.status === "todo").map(renderTaskCard)}
+          </ul>
         </section>
 
         {/* IN PROGRESS */}
@@ -160,11 +235,7 @@ export const BoardPage = () => {
           <ul className={styles.list}>
             {tasks
               .filter((t) => t.status === "in-progress")
-              .map((t) => (
-                <li key={t.id} className={styles.card}>
-                  {t.title}
-                </li>
-              ))}
+              .map(renderTaskCard)}
           </ul>
         </section>
 
@@ -191,13 +262,7 @@ export const BoardPage = () => {
           </div>
 
           <ul className={styles.list}>
-            {tasks
-              .filter((t) => t.status === "done")
-              .map((t) => (
-                <li key={t.id} className={styles.card}>
-                  {t.title}
-                </li>
-              ))}
+            {tasks.filter((t) => t.status === "done").map(renderTaskCard)}
           </ul>
         </section>
       </div>
