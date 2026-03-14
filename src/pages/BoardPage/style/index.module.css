@@ -65,14 +65,44 @@
 }
 
 .card {
-  background: #f6f7fb;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 12px;
   padding: 10px 12px;
+
+  display: grid;
+  gap: 6px;
 }
 
 @media (max-width: 900px) {
   .columns {
     grid-template-columns: 1fr;
   }
+}
+
+
+.cardTopic {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(17, 24, 39, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.cardTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.cardDesc {
+  font-size: 13px;
+  color: rgba(17, 24, 39, 0.7);
+  line-height: 1.35;
+
+  /* чтобы длинный текст не раздувал карточку */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;      /* сколько строк показывать */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

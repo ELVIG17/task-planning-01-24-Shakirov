@@ -88,12 +88,14 @@ export const BoardPage = () => {
           <ul className={styles.list}>
             {tasks
               .filter((t) => t.status === "todo")
-              .map((t) => (
-                <li key={t.id} className={styles.card}>
-                  {t.title}
-                </li>
-              ))}
-          </ul>
+                .map((t) => (
+                   <li key={t.id} className={styles.card}>
+                    <div className={styles.cardTopic}>{t.topic}</div>
+                    <div className={styles.cardTitle}>{t.title}</div>
+                    <div className={styles.cardDesc}>{t.description}</div>
+                  </li>
+                  ))}
+           </ul>
         </section>
 
         {/* IN PROGRESS */}

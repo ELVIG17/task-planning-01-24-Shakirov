@@ -22,4 +22,4 @@ export const Navbar = ({ logo, items, logout }) => {
       <div className={styles.logout}>{logout}</div>
     </aside>
   );
-};
+};  
