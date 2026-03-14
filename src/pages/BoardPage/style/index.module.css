@@ -104,5 +104,6 @@
   display: -webkit-box;
   -webkit-line-clamp: 3;      /* сколько строк показывать */
   -webkit-box-orient: vertical;
+  line-clamp: 3; 
   overflow: hidden;
 }
