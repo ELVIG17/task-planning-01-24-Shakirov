@@ -1,5 +1,5 @@
-import styles from "../style/index.module.css";
-import { IconButton } from "../../../ui/iconButton/index.jsx";
+import styles from "../BoardColumn/style/index.module.css";
+import { IconButton } from "../../../../ui/iconButton/index.jsx";
 
 export function BoardColumn({ title, status, onAdd, children }) {
   return (

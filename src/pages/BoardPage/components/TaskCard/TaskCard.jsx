@@ -1,5 +1,5 @@
-import styles from "../style/index.module.css";
-import { IconButton } from "../../../ui/iconButton/index.jsx";
+import styles from "../TaskCard/style/index.module.css";
+import { IconButton } from "../../../../ui/iconButton/index.jsx";
 
 export function TaskCard({ task, openMenuId, setOpenMenuId, onEdit, onDelete }) {
   const isMenuOpen = openMenuId === task.id;

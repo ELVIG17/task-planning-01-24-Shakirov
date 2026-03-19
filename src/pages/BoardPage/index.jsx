@@ -9,8 +9,8 @@ import { useTasks } from "../../hooks/useTasks.js";
 import { BOARD_COLUMNS } from "../../constants/boardColumns.js";
 import { tasksByStatus } from "../../utils/tasks.js";
 
-import { BoardColumn } from "../BoardPage/components/BoardColumn.jsx";
-import { TaskCard } from "../BoardPage/components/TaskCard.jsx";
+import { BoardColumn } from "./components/BoardColumn/BoardColumn.jsx";
+import { TaskCard } from "./components/TaskCard/TaskCard.jsx";
 
 export const BoardPage = () => {
   const [range, setRange] = useState("day");

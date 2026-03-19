@@ -1,0 +1,83 @@
+.card {
+  background: #ffffff;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 12px;
+  padding: 10px 12px;
+
+  display: grid;
+  gap: 6px;
+}
+
+.cardTopic {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(17, 24, 39, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.cardTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.cardDesc {
+  font-size: 13px;
+  color: rgba(17, 24, 39, 0.7);
+  line-height: 1.35;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  gap: 8px;
+}
+
+.cardActions {
+  position: relative;
+}
+
+.cardMenu {
+  position: absolute;
+  right: 0;
+  top: 28px;
+  min-width: 120px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 6px;
+  z-index: 20;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.cardMenuItem,
+.cardMenuItemDanger {
+  width: 100%;
+  text-align: left;
+  padding: 8px 10px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.cardMenuItem:hover {
+  background: #f3f4f6;
+}
+
+.cardMenuItemDanger {
+  color: #b91c1c;
+}
+
+.cardMenuItemDanger:hover {
+  background: #fee2e2;
+}

@@ -1,0 +1,35 @@
+.column {
+  background: #eef2f5;
+  border-radius: 12px;
+  padding: 12px;
+  min-height: 200px;
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.columnTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.columnActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: grid;
+  gap: 10px;
+}
