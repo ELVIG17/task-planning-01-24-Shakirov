@@ -1,5 +1,5 @@
 import { NavLink } from "react-router";
-import { ItemNavbar } from "../../ui/ItemNavbar/index.jsx"; // поправь путь/регистр под себя
+import { ItemNavbar } from "../../ui/ItemNavbar/index.jsx"; 
 import styles from "./style/index.module.css";
 
 export const Navbar = ({ logo, items, logout }) => {
